@@ -36,6 +36,10 @@ module Axlsx
     # @return [String]
     attr_reader :marker_symbol
 
+    # @return [Boolean]
+    attr_reader :on_primary_y_axis
+
+
     # Creates a new ScatterSeries
     def initialize(chart, options={})
       @xData, @yData = nil
@@ -50,6 +54,7 @@ module Axlsx
       @ln_width = options[:ln_width] unless options[:ln_width].nil?
       @show_marker = [:lineMarker, :marker, :smoothMarker].include?(chart.scatter_style)
       @marker_symbol = :default
+      @on_primary_y_axis = true
 
       super(chart, options)
 
@@ -77,6 +82,12 @@ module Axlsx
     def marker_symbol=(v)
       Axlsx::validate_marker_symbol(v)
       @marker_symbol = v
+    end
+
+    # is it on the primary axis?
+    def on_primary_y_axis=(v)
+      Axlsx.validate_boolean(v)
+      @on_primary_y_axis = v
     end
 
     # Serializes the object
